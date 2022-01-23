@@ -64,7 +64,7 @@ test:
 test-race:
 	go test -cover -race ./...
 
-build: micromdm mdmctl
+build: micromdm mdmctl webhook
 
 clean:
 	rm -rf build/
@@ -105,6 +105,19 @@ install-micromdm: .pre-micromdm
 xp-micromdm: .pre-build .pre-micromdm
 	GOOS=darwin go build -o build/darwin/micromdm -ldflags ${BUILD_VERSION} ./cmd/micromdm
 	GOOS=linux CGO_ENABLED=0 go build -o build/linux/micromdm  -ldflags ${BUILD_VERSION} ./cmd/micromdm
+
+.pre-webhook:
+	$(eval APP_NAME = webhook)
+
+webhook: .pre-build .pre-webhook
+	go build -o build/$(CURRENT_PLATFORM)/webhook -ldflags ${BUILD_VERSION} ./cmd/webhook
+
+install-webhook: .pre-webhook
+	go install -ldflags ${BUILD_VERSION} ./cmd/webhook
+
+xp-webhook: .pre-build .pre-webhook
+	GOOS=darwin go build -o build/darwin/webhook -ldflags ${BUILD_VERSION} ./cmd/webhook
+	GOOS=linux CGO_ENABLED=0 go build -o build/linux/webhook  -ldflags ${BUILD_VERSION} ./cmd/webhook
 
 release-zip: xp-micromdm xp-mdmctl
 	zip -r micromdm_${VERSION}.zip build/
