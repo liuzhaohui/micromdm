@@ -113,6 +113,12 @@ func (w *Worker) Run(ctx context.Context) error {
 			event, err = checkinEvent(ev.Topic, ev.Message)
 		}
 
+		level.Info(w.logger).Log(
+			"msg", "receive webhook event",
+			"topic", event.Topic,
+			"eventId", event.EventID,
+		)
+
 		if err != nil {
 			level.Info(w.logger).Log(
 				"msg", "create webhook event",

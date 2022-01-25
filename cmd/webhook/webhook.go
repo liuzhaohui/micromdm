@@ -32,6 +32,7 @@ type Command struct {
 func (s *Server) handleWebhook(w http.ResponseWriter, r *http.Request) {
 	var event webhook.Event
 	err := json.NewDecoder(r.Body).Decode(&event)
+	log.Println("receive : ", event.Topic, event.EventID)
 	if err != nil {
 		log.Fatal(err)
 		return
