@@ -76,7 +76,8 @@ clean:
 
 install-local: \
 	install-mdmctl \
-	install-micromdm
+	install-micromdm \
+	install-webhook 
 
 .pre-mdmctl:
 	$(eval APP_NAME = mdmctl)
@@ -128,6 +129,9 @@ docker-build:
 
 docker-tag: docker-build
 	docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest
+
+install:
+	cp build/darwin/* ~/
 
 ngrok:
 	@./tools/ngrok/screen

@@ -126,6 +126,7 @@ func serve(args []string) error {
 		flPrintArgs              = flagset.Bool("print-flags", false, "Print all flags and their values")
 		flQueue                  = flagset.String("queue", env.String("MICROMDM_QUEUE", "builtin"), "command queue type")
 	)
+	
 	flagset.Usage = usageFor(flagset, "micromdm serve [flags]")
 	if err := flagset.Parse(args); err != nil {
 		return err
@@ -178,6 +179,8 @@ func serve(args []string) error {
 		SCEPClientValidity: *flSCEPClientValidity,
 		Queue:              *flQueue,
 	}
+
+	mainLogger.Log("webhook", sm.CommandWebhookURL)
 	if !sm.UseDynSCEPChallenge {
 		// TODO: we have a static SCEP challenge password here to prevent
 		// being prompted for the SCEP challenge which happens in a "normal"

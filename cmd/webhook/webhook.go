@@ -86,6 +86,8 @@ func (s *Server) handleConnect(event webhook.Event) {
 	xml := string(event.AcknowledgeEvent.RawPayload)
 	if strings.Contains(xml, "InstalledApplicationList") {
 		log.Println(xml)
+	} else {
+		log.Println(xml)
 	}
 }
 
