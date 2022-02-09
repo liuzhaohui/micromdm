@@ -180,7 +180,10 @@ func serve(args []string) error {
 		Queue:              *flQueue,
 	}
 
+	mainLogger.Log("flTLSCert", sm.TLSCertPath)
 	mainLogger.Log("webhook", sm.CommandWebhookURL)
+	mainLogger.Log("flRepoPath", *flRepoPath)
+	
 	if !sm.UseDynSCEPChallenge {
 		// TODO: we have a static SCEP challenge password here to prevent
 		// being prompted for the SCEP challenge which happens in a "normal"
